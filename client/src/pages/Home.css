@@ -1,0 +1,43 @@
+.home-container{
+	justify-content: center;
+	width:35%;
+	margin-top:-75px;
+	text-align: center;
+	overflow:hidden;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+}
+
+.home-content{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	background-color: #111529;
+}
+
+.home-col{
+	font-size:18px;
+	background-color: #111529;
+}
+
+@media screen and (max-width: 1300px){
+	.home-container{
+		justify-content: center;
+		width:65%;
+		margin-top:-75px;
+		text-align: center;
+		overflow:hidden;
+		border-bottom-left-radius: 20px;
+		border-bottom-right-radius: 20px;
+	}
+
+	.home-content{
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		background-color: #111529;
+	}
+
+	.home-col{
+		font-size:18px;
+		background-color: #111529;
+	}
+}

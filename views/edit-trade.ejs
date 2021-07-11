@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang = "en">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title> Login </title>
+	</head>
+	<header style="text-align:center">
+		<h1> Edit Trade </h1>
+		<h3> Leave field empty for no change </h3>
+		<form action = "/journal" method="get">
+			<button> Go Back </button>
+		</form>
+		<br>
+		<form id='delete-trade'>
+			<button style="color:red" type="submit"> Delete Trade </button>
+		</form>
+		<br>
+		<form id='edit-trade'>
+			Name of trade (i.e 250/255 $SPY ):
+			<br>
+			<input type = "text" id="name" placeholder='Currently: <%= trade_data[index].name %>' />	
+			<br>
+
+			Quantity:
+			<br>
+			<input type="number" placeholder="0" id="quantity"> 
+			<br>
+
+			Type of spread (i.e Credit, Debit, Condor, Butterfly):
+			<br>
+			<input type = "text" id="type" placeholder='Currently: <%= trade_data[index].type %>' />	
+			<br>
+
+			Date of Expiration:
+			<br>
+			<input type = "date" id="date" placeholder='<%= trade_data[index].date %>' />	
+			<br>
+
+			Equity (if this is a net credit spread, make sure this is negative):
+			<br>
+			<input type = "number" id="price" placeholder='Currently: <%= trade_data[index].price %>' />	
+			<br>
+
+			Price At Close (Leave empty if trade has not concluded yet):
+			<br>
+			<% let close = 'N/A'  %>
+			<% if(trade_data[index].close_price) { %>
+				<% close = trade_data[index].close_price %>
+			<% } %>
+			<input type = "number" id="close_price" placeholder='Currently: <%=close%>'/>
+			<br>
+			<br>
+			<br>
+			<input type="submit" id="submit" placeholder="submit"/>
+		</form> 
+	</header>
+		<script>
+			const edit = document.getElementById('edit-trade')
+			edit.addEventListener('submit', editTrade)		
+
+			const del = document.getElementById('delete-trade')
+			del.addEventListener('submit', deleteTrade)		
+			
+			const name = document.getElementById('name').value	
+			const quantity = document.getElementById('quantity').value	
+			const type = document.getElementById('type').value	
+			const date = document.getElementById('date').value	
+			const price = document.getElementById('price').value	
+			const close_price = document.getElementById('close_price').value	
+				
+			async function deleteTrade(event){
+				event.preventDefault()
+
+				const result = await fetch('/api/delete-trade', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						index: <%=index%>
+					})
+				}).then((res) => res.json())
+			
+				if(result.status === 'ok'){
+					document.location.href  = '/account'
+				}
+				else{
+					alert(result.error)
+				}
+			}
+		
+			async function editTrade(event){
+				event.preventDefault()
+				
+				const result = await fetch('/api/edit-trade', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						index: <%=index%>,
+						name,
+						quanitity,
+						type,
+						date,
+						price,
+						close_price
+					})
+				}).then((res) => res.json())
+			
+				if(result.status === 'ok'){
+					document.location.href  = '/account'
+				}
+				else{
+					alert(result.error)
+				}
+			}
+		</script>
+</html>
+

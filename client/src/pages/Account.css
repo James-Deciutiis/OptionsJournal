@@ -1,0 +1,57 @@
+.cal-heading{
+	text-align: center;
+}
+
+.calendar-container{
+	width: 100%;
+	text-align: center;
+}
+
+.month-container{
+	width:90%;
+	background-color: #111529;
+	border-style: hidden;
+	border-radius: 25px;
+	display: inline-block;
+	margin-bottom: 20px;
+}
+
+.month-heading{
+	border-top: 0px hidden;
+	overflow: hidden;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	height:90%;
+	text-align: center;
+	justify-content: center;
+	align-items:center;
+	position:flex;
+	background: linear-gradient(90deg, rgb(110, 94, 254) 0%, rgba(73, 63, 252,1) 100%);
+	border-bottom: 1px solid;
+}
+
+.day-of-week{
+	display: grid;
+	grid-template-columns: repeat(7,1fr);
+	grid-gap: 1em;
+}
+
+.day-of-week > span{
+	height: 14vh;
+	text-align: center;
+}
+
+.days{
+	display: grid;
+	grid-template-columns: repeat(7,1fr);
+	overflow: hidden;
+}
+
+.date{
+	height: 14vh;
+	text-align: center;
+	border-style: solid;
+	border-width: thin;
+	border-radius:30px;
+}
+

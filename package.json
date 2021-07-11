@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "aws-sdk": "^2.939.0",
+    "bcrypt-nodejs": "0.0.3",
+    "bcryptjs": "^2.4.3",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "f": "^1.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "local-storage": "^2.0.0",
+    "mongodb": "^3.6.9",
+    "mongoose": "^5.12.7",
+    "node-fetch": "^2.6.1",
+    "node-gyp": "^8.1.0",
+    "node-pre-gyp": "^0.17.0",
+    "react-router-dom": "^5.2.0",
+    "unirest": "^0.6.0"
+  },
+  "scripts": {
+    "start": "node main.js && node /client/src/index.js",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
+  },
+  "engines": {
+    "node": "10.16.0"
+  }
+}

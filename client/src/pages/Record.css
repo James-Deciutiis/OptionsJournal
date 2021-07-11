@@ -1,0 +1,18 @@
+.record-heading{
+	border-top-left-radius: 20px;
+	overflow:hidden;
+	border-top-right-radius: 20px;
+	text-align: center;
+	border-bottom: 1px solid;
+	background: linear-gradient(90deg, rgb(110, 94, 254) 0%, rgba(73, 63, 252,1) 100%);
+}
+
+.record-container{
+	justify-content: center;
+	width:50%;
+	margin-top:100px;
+	text-align: center;
+	background-color: #111529;
+	border-style: hidden;
+	border-radius: 25px;
+}

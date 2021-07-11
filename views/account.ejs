@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang = "en">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title> Account </title>
+		<link rel="stylesheet" href="/account.css">
+	</head>
+	<header>
+		<h1> Dashboard </h1>
+		<form action = '/logout' method="get">	
+			<input type="submit" value="Logout"/>
+		</form>
+		<br><br>
+		<form action = '/suggestions' method="post">	
+			<input type="submit" value="Upcoming Earnings"/>
+		</form>
+		<br><br>
+		<form action = "/account" method="get">
+			<input type="text" placeholder="Year" name="year">
+			<button type="submit">Search</button>
+		</form>
+		<br><br>
+		<form action="/journal" method="get">
+			<button type="Submit">Go To Journal</button>
+		</form>
+		<br><br>
+		<form action = "/record-trade" method="get">
+			<button type="submit"> Record A Trade </button>
+		</form>
+		<br><br>
+		<form action="/change-password" method="get">
+			<button type="Submit">Change Password</button>
+		</form>
+		<h2>Year: <%= year %></h2>
+	</header>
+	<body>
+		<div class="calendar-container">
+			<% for(let i = 0; i < calendar.length; i++){ %>
+			
+			<div class="month-container" id="<%= months[i] %>">
+				<h3 style="text-align: center;"><%= months[i] %> </h3>
+
+				<div class="day-of-week">
+					<span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+				</div>
+				<% for(let j = 0; j < calendar[i].length; j++) { %>
+				<div class="days">
+					<% for(let k = 0; k < calendar[i][j].length; k++) { %>
+					<div class="date">
+						<div id="<%=calendar[i][j][k] %>">
+							<%= calendar[i][j][k] %>	
+							<% if(trade_data != null) { %> 
+								<% for(let x = 0; x < trade_data.length; x++){ %>
+									<% let trade_year = trade_data[x].date.substring(0, 4) %>
+									<% let trade_month = trade_data[x].date.substring(5, 7) %>
+									<% let trade_day = trade_data[x].date.substring(8, 10) %>	
+									<% if (trade_year == year && trade_day == calendar[i][j][k] && trade_month == i+1){ %>
+										<br>
+										Name:
+										<span style="color:blue">
+											<%= trade_data[x].name %>
+										</span>
+										<% if (trade_data[x].close_price){ %>
+											Profit/Loss:
+											<% if((trade_data[x].close_price - trade_data[x].price) > 0) { %>
+												<span style="color:green">
+													<%= trade_data[x].close_price - trade_data[x].price %>
+												</span>
+											<% } else { %>
+												<span style="color:red">
+													<%= trade_data[x].close_price - trade_data[x].price %>
+												</span>
+											<% } %>
+										<% } %>
+										<span>
+											<form action = "/trade" method="post">
+												<input type="hidden" name="index" value='<%=x%>' />
+										<span>
+											<button>View</button>
+										</span>
+											</form>
+										</span>
+									<% } %>
+								<% } %>
+							<% } %>
+						</div>
+					</div>
+					<% } %>
+				</div>
+				<% } %>
+			</div>
+
+			<% } %>
+		</div>
+	</body>
+</html>
+

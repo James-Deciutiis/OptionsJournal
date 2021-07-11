@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang = "en">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title> Account </title>
+		<link rel="stylesheet" href="/journal.css">
+	</head>
+	<header style="text-align:center">
+		<h1> Welcome To Your Journal </h1>
+		<form action="/account" method="get">
+			<button type="Submit">Go Back</button>
+		</form>
+		<br>
+	</header>
+	<body>
+		<div class="journal-container">
+			<div class="column">
+				<span>Name</span><span>Quantity</span><span>Type</span><span>Expiration Date</span><span>Price</span><span>Close Price</span><span>Profit/Loss</span>
+			</div>
+			<br>
+			<div>
+				<% let total_pl = 0 %>
+				<% for(let i = 0; i < journal.length; i++){ %>
+					<div class="column">
+						<% if(!journal[i].close_price) { %>
+						<span><%= journal[i].name %></span><span><%= journal[i].quantity %></span><span><%= journal[i].type %></span><span><%= journal[i].date %></span><span><%= journal[i].price %></span><span>N/A</span><span>N/A</span>
+						<% } else { %>
+						<span><%= journal[i].name %></span><span><%= journal[i].quantity %> </span><span><%= journal[i].type %></span><span><%= journal[i].date %></span><span><%= journal[i].price %></span><span><%= journal[i].close_price %></span>
+							<% let pl = (journal[i].close_price - journal[i].price) * journal[i].quantity %>
+							<% if(pl > 0) { %>
+								<span style="color:green">
+									<%=pl%>
+								</span>		
+							<% } else { %>
+								<span style="color:red">
+									<%=pl%>
+								</span>		
+							<% } %>
+							<% total_pl += pl %>
+						<% } %>
+						<span>
+							<form action = "/edit-trade" method="post">
+								<input type="hidden" name="index" value='<%=i%>' />
+								<span>
+									<button id="edit-trade">Edit/Delete</button>
+								</span>
+							</form>
+						</span>
+					</div>
+				<% } %>
+				<br>
+				Total Profit/Loss:
+				<% if(total_pl >= 0) { %>
+					<span style="color:green"><%= total_pl %></span>
+				<% } else { %>
+					<span style="color:red"><%= total_pl %></span>
+				<% } %>
+			</div>
+		</div>
+	<body>
+</html>
+

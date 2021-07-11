@@ -1,0 +1,32 @@
+.row{
+	display: grid;
+	grid-template-columns: repeat(3,1fr);
+	border-bottom: 1px solid;
+	text-align: center;
+	align-content: center;
+	height: 12vh;
+}
+
+.row-2{
+	display: grid;
+	text-align: center;
+	align-content: center;
+	grid-template-columns: repeat(3, 1fr);
+	background-color: #403e37;
+	border-bottom: 1px solid;
+	height: 12vh;
+}
+
+.row > span{
+	text-align: center;
+}
+
+.suggestion-container{
+	justify-content: center;
+	width:90%;
+	margin-top:75px;
+	text-align: center;
+	background-color: #111529;
+	border-style: hidden;
+	border-radius: 25px;
+}

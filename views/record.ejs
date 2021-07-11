@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang = "en">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title> Account </title>
+		<link rel="stylesheet" href="/account.css">
+	</head>
+	<header>
+		<h1> Record Your Trade </h1>
+		<form action="/account" method="get">
+			<button type="Submit">Go Back</button>
+		</form>
+		<br><br>
+		<form id = "trade-form">
+			Name of trade (i.e 250/255 $SPY ):
+			<br>
+			<input type="text" placeholder="Name" id="name" > 
+			<br>
+
+			Quantity:
+			<br>
+			<input type="number" placeholder="0" id="quantity"> 
+			<br>
+
+			Type of spread (i.e Credit, Debit, Condor, Butterfly):
+			<br>
+			<input type="text" placeholder="Debit or Credit" id="type"> 
+			<br>
+
+			Date of Expiration:
+			<br>
+			<input type="Date" placeholder="Expiration Date" id="date"> 
+			<br>
+
+			Equity (if this is a net credit spread, make sure this is negative):
+			<br>
+			<input type="Number" placeholder="Price or Collateral" id="price"> 
+			<br>
+
+			Price At Close (Leave empty if trade has not concluded yet):
+			<br>
+			<input type="Number" placeholder="Close Price" id="close-price"> 
+			<br>
+
+			<br>
+
+			<input type="submit">
+		</form>
+	</header>
+	<script>
+		const tradeForm = document.getElementById('trade-form')	
+		tradeForm.addEventListener('submit', recordTrade)
+
+		async function recordTrade(event){
+			event.preventDefault()
+			const name = document.getElementById('name').value	
+			const quantity = document.getElementById('quantity').value	
+			const type = document.getElementById('type').value	
+			const date = document.getElementById('date').value	
+			const price = document.getElementById('price').value	
+			const close_price = document.getElementById('close-price').value	
+
+			const result = await fetch('/api/record-trade', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					name,
+					quantity,
+					type,
+					date,
+					price,
+					close_price
+				})
+			}).then((res) => res.json())
+
+			if(result.status === 'ok'){
+				document.location.href  = '/account'
+			}
+			else{
+				alert(result.error)
+			}
+		}
+
+		
+	</script
+</html>
+

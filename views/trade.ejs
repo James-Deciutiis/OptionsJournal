@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang = "en">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title> <%= trade[index].name %> </title>
+		<link rel="stylesheet" href="/journal.css">
+	</head>
+	<header style="text-align:center">
+		<h1> Trade Details</h1>
+		<form action="/account" method="get">
+			<button type="Submit">Go Back</button>
+		</form>
+		<br>
+	</header>
+	<body style="text-align:center">
+		<h3> Name: </h3>
+		<%= trade[index].name %>
+		<h3> Quantity: </h3>
+		<%= trade[index].quantity %>
+		<h3> Type: </h3>
+		<%= trade[index].type %>
+		<h3> Expiration Date: </h3>
+		<%= trade[index].date %>
+		<h3> Price Per Contract: </h3>
+		<%= trade[index].price %>
+		<h3> Closing Price Per Contract</h3>
+		<% if(trade[index].close_price) { %>
+			<%= trade[index].close_price %>
+			<h3> Profit/Loss Per Contract </h3>
+				<% if((trade[index].close_price - trade[index].price) > 0) { %>
+					<span style="color:green"><%= (trade[index].close_price - trade[index].price) %></span>
+				<% } else { %>
+					<span style="color:red"><%= (trade[index].close_price - trade[index].price) %></span>
+				<% } %>
+		<% } else { %>
+			N/A
+		<% } %>
+	</body>
+</html>

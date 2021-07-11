@@ -1,0 +1,22 @@
+header{
+	text-align: center;
+}
+
+header > h1{
+	color: blueviolet;
+}
+
+.column{
+	display: grid;
+	grid-template-columns: repeat(3,1fr);
+}
+
+.column > span{
+	height: 5vh;
+	text-align: center;
+}
+
+.suggestion-container{
+	width: 100%;
+	height: 100%;
+}

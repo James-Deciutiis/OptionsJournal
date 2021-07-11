@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang = "en">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title> Welcome! </title>
+		<h1> validateing.. </h1>
+		
+	</head>
+		<script>
+			try{
+				const result = fetch('/api/account-validation', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						token: localStorage.getItem('token')
+					})
+				}).then((res) => res.json())
+	
+				if(result.status === 'ok'){
+					alert("Success")
+					document.location.href  = '/account'
+				}
+				else{
+					alert("Invalid Token")
+				}
+			}
+			catch(error){
+				console.log('error')
+				throw error
+			}
+	</script>
+</html>
+

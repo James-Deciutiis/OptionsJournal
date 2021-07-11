@@ -1,0 +1,15 @@
+.journal-container{
+	width:100%;
+	height:100%;
+	align:center;
+}
+
+.column{
+	display: grid;
+	grid-template-columns: repeat(8, 2fr);
+}
+
+.column > span{
+	height: 6vh;
+	text-align: center;
+}

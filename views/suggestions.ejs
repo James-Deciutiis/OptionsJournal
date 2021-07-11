@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang = "en">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title> Account </title>
+		<link rel="stylesheet" href="/suggestions.css">
+	</head>
+	<header>
+		<h1> Upcoming Earnings </h1>
+		<form action="/account" method="get">
+			<button type="Submit">Go Back</button>
+		</form>
+		<br>
+	</header>
+	<body>
+		<div class = "suggestion-container">
+			<div class = "column">
+				<span>$Symbol</span><span>Date of Earnings</span><span>Hours(BMO for Before market hours, AMC for after market close)</span>
+			</div>
+			<div class = "column">
+				<% for(let i = 0; i < earnings.length; i++){ %>
+					<span><%= earnings[i].symbol %></span>
+					<span><%= earnings[i].date %></span>
+					<span><%= earnings[i].hour %></span>
+				<% } %>
+			</div>
+		</div>
+	</body>
+</html>
