@@ -9,6 +9,7 @@ class Journal extends Component{
 			journal : [],	
 			total_pl : 0
 		}
+		this.sendToEditTrade = this.sendToEditTrade.bind(this)
 	}
 
 	async componentDidMount(){
@@ -38,6 +39,34 @@ class Journal extends Component{
 			}
 		}
 	}
+	
+	async sendToEditTrade(event){
+		event.preventDefault()
+		const index = event.target.value
+
+		const result = await fetch('/api/edit', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				index:index
+			})
+		}).then((res) => res.json())
+
+		if(result.status === 'ok'){
+			this.props.history.push('/edit-trade')
+		}
+		else{
+			if(result.error === 'invalid-signature'){
+				this.props.history.push('/')
+			}
+			else{
+				alert('something is wrong')
+				alert(result.error)
+			}
+		}
+	}
 
 	render(){
 		const journal = this.state.journal
@@ -46,7 +75,7 @@ class Journal extends Component{
 			<br></br>
 			<div className="journal-container">
 				<div className="heading">
-					<h1> Journal </h1>
+					<h3> Journal </h3>
 					<form action = "/record">
 						<Button> Add </Button>
 					</form>
@@ -82,10 +111,7 @@ class Journal extends Component{
 									</span>		
 								)}
 							<span>
-								<form action = "/edit-trade" method="post">
-									<input type="hidden" name="index" value={index_one}/>
-									<Button>Edit/Del</Button>
-								</form>
+																								<button onClick={this.sendToEditTrade} value={index_one}>View</button>
 							</span>
 						</div>
 						)}

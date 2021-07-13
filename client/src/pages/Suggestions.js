@@ -35,6 +35,7 @@ class Suggestions extends Component{
 			this.setState({ earnings: result.earnings })
 		}
 		else{
+			this.props.history.push('/')
 		}
 	}
 

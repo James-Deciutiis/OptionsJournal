@@ -13,6 +13,7 @@ import ChangePassword from './pages/ChangePassword'
 import Suggestions from './pages/Suggestions'
 import Logout from './pages/Logout'
 import Trade from './pages/Trade'
+import EditTrade from './pages/EditTrade'
 import Navbar from './components/Navbar'
 
 class App extends Component{
@@ -32,7 +33,8 @@ class App extends Component{
 				<Route path='/suggestions' component={Suggestions}/>
 				<Route path='/logout' component={Logout}/>
 				<Route path='/trade' component={Trade}/>
-    	    </Switch>
+				<Route path='/edit-trade' component={EditTrade}/>
+    	    		</Switch>
      	</div>
     	)
     

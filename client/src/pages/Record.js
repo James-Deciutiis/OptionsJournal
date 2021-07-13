@@ -19,7 +19,7 @@ class Record extends Component{
 	}
 	
 	async componentDidMount(){
-		await this.fetchData()
+		await this.validateUser()
 	}
 
 	handleChange(event){
@@ -28,7 +28,7 @@ class Record extends Component{
 		})
 	}
 	
-	async fetchData(){
+	async validateUser(){
 		const result = await fetch('/api/record', {
 			method : 'POST',
 			headers: {

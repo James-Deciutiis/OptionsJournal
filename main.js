@@ -39,7 +39,6 @@ async function add(doc) {
          const col = db.collection("Users/Trades")
          const p = await col.insertOne(doc)
          const myDoc = await col.findOne()
-         console.log(myDoc)
         } catch (err) {
          console.log(err.stack)
      }
@@ -55,7 +54,6 @@ async function find(username){
          const db = client.db("UsersTrades")
          const col = db.collection("Users/Trades")
          const result = await col.findOne({username})
-	   console.log(result)
 	 if(result){
 	  return result
 	 }
@@ -68,14 +66,22 @@ async function find(username){
      	}
 }
 
-async function update(username, trade){
+async function update(username_, obj_type, obj){
 	try{
          await client.connect()
          console.log("Connected correctly to server")
          const db = client.db("UsersTrades")
          const col = db.collection("Users/Trades")
-	 const options = {}
-	 col.updateOne(username, trade, options)
+	 const filter = {username: username_}
+	 const options = {upsert: true}
+	 const updateDoc = {
+		$set: {
+			obj_type:
+				obj
+		},
+	};
+
+	 const result = await col.updateOne(filter, updateDoc, options)
         } 
 	catch (err) {
          console.log(err.stack)
@@ -182,7 +188,7 @@ app.post('/api/record-trade', async (req, res) => {
 			try{
 				trades.push({ "name" : name, "quantity": quantity, "type": type, "date": date, "price": price, "close_price" : close_price})
 				ls.set('trades', trades)
-				await update(username, trades)
+				await update(username, "trades", trades)
 			}
 			catch(error){
 				console.log(error)
@@ -229,7 +235,7 @@ app.post('/api/edit-trade', async(req, res) => {
 			}
 						
 			trades[index] = entry
-			await update(username, trades)
+			await update(username, "trades", trades)
 			ls.set('trades', trades)
 		}
 		catch(error){
@@ -250,25 +256,10 @@ app.post('/api/delete-trade', async(req, res) => {
 		const { index } = req.body
 		const username = jwt.verify(ls.get('token'), SECRET).username
 		try{
-			const user = await User.findOne({ username }).lean()
-			const id = user._id
-			let trades_ = user.trades
-			trades_.splice(index, 1)
-
-			User.updateOne(
-				{ _id: id },
-				{ $set:
-					{ trades : trades_ }
-				},
-				function(error, success){
-					if(error){
-						console.log(error)
-					}
-					else{
-						ls.set('trades', trades_)
-					}
-				}
-			)
+			trades = ls.get('trades')
+			trades.splice(index, 1)
+			ls.set('trades', trades)
+			await update(username, "trades", trades)
 		}
 		catch(error){
 			return res.json({status: 'error', error:'Session expired, please login again'})
@@ -296,7 +287,7 @@ app.post('/api/change-password', async (req, res) => {
 		try{
 			const user = jwt.verify(token, SECRET)
 			const _id = user.id
-			await User.updateOne( { _id }, { $set: { password } } )
+			await update(username, "password", password)
 		}
 		catch(error){
 			return res.json({ status:'error', error:'invalid-signature' })
@@ -338,19 +329,39 @@ app.post('/api/suggestions', async(req, res) => {
 	}
 })
 
-app.post('/edit-trade', function(req, res){
+app.post('/api/edit', function(req, res){
 	const { index } = req.body
 	try{
 		if(validateUser()){
 			trades = ls.get('trades')
-			res.render('edit-trade', { error: 'none', index: index, trade_data:trades})
+			data = trades[index]
+			ls.set('target_trade', data)
+			return res.json({ status: 'ok'})
 		}
 		else{
-			res.render('index', { error : 'invalid signature'})
+			console.log('HERE')
+			return res.json({status: 'error', error: 'invalid-signature'})
 		}
 	}
 	catch(error){
 		throw error
+	}
+			
+	console.log('HERE')
+	return res.json({status: 'error', error: 'something is wrong'})
+})
+
+app.post('/api/fetch-single-trade', async(req, res) => {
+	try{
+		if(validateUser()){
+			return res.json({ status : 'ok', trade_data: ls.get('target_trade') })
+		}
+		else{
+			return res.json({ status : 'error',  error: 'invalid signature'})
+		}
+	}
+	catch(error){
+		return res.json({ status : 'error',  error: 'invalid signature'})
 	}
 })
 

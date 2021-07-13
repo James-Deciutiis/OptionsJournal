@@ -9,7 +9,7 @@
 
 .journal-container{
 	justify-content: center;
-	width:80%;
+	width:50%;
 	margin-top: 100px;
 	background-color: #111529;
 	border-style: hidden;
@@ -49,3 +49,44 @@
 	font-size: 12px;
 }
 
+@media screen and (max-width: 800px){
+	.journal-container{
+		justify-content: center;
+		margin-top: 100px;
+		width:98%;
+		background-color: #111529;
+		border-style: hidden;
+		border-radius: 25px;
+	}
+	.journal-row{
+		display: grid;
+		text-align: center;
+		grid-template-columns: repeat(8, 1fr);
+		background-color: #403e37;
+		border-top: 10vh;
+		border-bottom: 1px solid;
+	}
+
+	.journal-row-2{
+		display: grid;
+		text-align: center;
+		grid-template-columns: repeat(8, 1fr);
+		border-top: 10vh;
+		border-bottom: 1px solid;
+	}
+	.journal-row > span{
+		display: flex;
+		padding:10px;
+		margin: 0 auto;
+		text-align: center;
+		font-size: 10px;
+	}
+
+	.journal-row-2 > span{
+		display: flex;
+		padding:10px;
+		margin: 0 auto;
+		text-align: center;
+		font-size: 10px;
+	}
+}
