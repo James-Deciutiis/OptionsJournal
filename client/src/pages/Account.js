@@ -12,7 +12,10 @@ class Account extends Component{
 			trade_data: [],
 			is_populated: Array(366).fill(false)
 		}
-	
+		
+		const year = (new Date()).getFullYear();
+		this.years = Array.from(new Array(20),(val, index) => index + year);
+		
 		this.handleChange = this.handleChange.bind(this)
 		this.sendToTrade = this.sendToTrade.bind(this)
 		this.updateCalendar = this.updateCalendar.bind(this)
@@ -177,16 +180,13 @@ class Account extends Component{
 					<form action="/change-password" method="get">
 						<Button type="Submit">Change Password</Button>
 					</form>
-					<form onSubmit = {this.updateCalendar}>
-						<input
-							type="text" 
-							name="year" 
-							value={this.state.year}
-							onChange={this.handleChange}
-						/>
-						<br></br>
-						<Button type = "submit"> Change Year </Button>
-					</form>
+					<select value= {this.year} onChange = {this.updateCalendar}>
+			     			{
+				            	this.years.map((y, index) => {
+							return <option key={`year${index}`} value={y}>{y}</option>
+						})}
+			    		</select>
+					<br></br>
 					<h2>Year: {year}</h2>
 				</div>
 				<div className="calendar-container">

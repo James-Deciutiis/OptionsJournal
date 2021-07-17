@@ -26,6 +26,8 @@ app.get("*", (req, res) => {
 });
 
 const client = new MongoClient("mongodb+srv://admin_thosonn:PZSdxQATXm6iNcX@optionsjournalcluster.yoiju.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"	, {
+
+//const client = new MongoClient(process.env.MONGO_URI, {
 	useNewUrlParser: true,
 	connectTimeoutMS: 30000,
 	useUnifiedTopology: true
@@ -239,7 +241,7 @@ app.post('/api/edit-trade', async(req, res) => {
 			ls.set('trades', trades)
 		}
 		catch(error){
-			return res.json({status: 'error', error:'Session expired, please login again'})
+			return res.json({status: 'error', error:error})
 		}
 
 		return res.json({status: 'ok'})
@@ -336,6 +338,7 @@ app.post('/api/edit', function(req, res){
 			trades = ls.get('trades')
 			data = trades[index]
 			ls.set('target_trade', data)
+			ls.set('current_index', index)
 			return res.json({ status: 'ok'})
 		}
 		else{
@@ -354,7 +357,7 @@ app.post('/api/edit', function(req, res){
 app.post('/api/fetch-single-trade', async(req, res) => {
 	try{
 		if(validateUser()){
-			return res.json({ status : 'ok', trade_data: ls.get('target_trade') })
+			return res.json({ status : 'ok', trade_data: ls.get('target_trade'), current_index: ls.get('current_index')})
 		}
 		else{
 			return res.json({ status : 'error',  error: 'invalid signature'})

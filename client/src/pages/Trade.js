@@ -49,7 +49,7 @@ class Trade extends Component{
 						<h1> Trades Exp On: {date}  </h1>
 					</div>
 					<div className="journal-row-2">
-						<span>Name</span><span>Quantity</span><span>Type</span><span>Expiration Date</span><span>Price</span><span>Close Price</span><span>Profit/Loss</span><span> Edit/Delete  </span>
+						<span>Name</span><span>Quantity</span><span>Type</span><span>Expiration Date</span><span>Price</span><span>Close Price</span><span>Profit/Loss</span>
 					</div>
 					{trades.map((entry, index_one) => (
 						<div>
@@ -57,12 +57,6 @@ class Trade extends Component{
 							<div className={index_one % 2 == 0 ? "journal-row":"journal-row-2"}>
 								<span>{trades[index_one].name}</span><span>{trades[index_one].quantity}</span><span>{trades[index_one].type}</span><span>{trades[index_one].date}</span><span>{trades[index_one].price}</span><span>N/A</span><span>N/A</span>
 								<span>
-									<form action = "/edit-trade" method="post">
-										<input type="hidden" name="index" value={index_one} />
-										<span>
-											<Button>Edit/Del</Button>
-										</span>
-									</form>
 								</span>
 							</div>
 							) : (
@@ -78,10 +72,6 @@ class Trade extends Component{
 										</span>		
 									)}
 								<span>
-									<form action = "/edit-trade" method="post">
-										<input type="hidden" name="index" value={index_one}/>
-										<Button>Edit/Del</Button>
-									</form>
 								</span>
 							</div>
 							)}

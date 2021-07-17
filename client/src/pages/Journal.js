@@ -77,7 +77,7 @@ class Journal extends Component{
 				<div className="heading">
 					<h3> Journal </h3>
 					<form action = "/record">
-						<Button> Add </Button>
+						<Button> Add + </Button>
 					</form>
 					<br></br>
 				</div>
@@ -93,7 +93,7 @@ class Journal extends Component{
 								<form action = "/edit-trade" method="post">
 									<input type="hidden" name="index" value={index_one} />
 									<span>
-										<Button>Edit/Del</Button>
+										<button onClick={this.sendToEditTrade} value={index_one}>Edit Trade</button>
 									</span>
 								</form>
 							</span>
@@ -111,7 +111,7 @@ class Journal extends Component{
 									</span>		
 								)}
 							<span>
-																								<button onClick={this.sendToEditTrade} value={index_one}>View</button>
+								<button onClick={this.sendToEditTrade} value={index_one}>Edit Trade</button>
 							</span>
 						</div>
 						)}

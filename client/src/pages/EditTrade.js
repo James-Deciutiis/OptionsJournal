@@ -11,11 +11,13 @@ class EditTrade extends Component{
 			type : "",
 			date : "",
 			price : 0,
-			close_price : null
+			close_price : null,
+			index : null
 		}
 	
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
+		this.handleDelete = this.handleDelete.bind(this)
 
 	}
 	
@@ -46,6 +48,7 @@ class EditTrade extends Component{
 			this.setState({date: result.trade_data.date})
 			this.setState({price: result.trade_data.price})
 			this.setState({close_price: result.trade_data.close_price})
+			this.setState({index: result.current_index})
 		}
 		else{
 			if(result.error === 'invalid-signature'){
@@ -78,6 +81,7 @@ class EditTrade extends Component{
 	async handleSubmit(event){
 		event.preventDefault()
 
+		const index = this.state.index
 		const name = this.state.title
 		const quantity = this.state.quantity
 		const type = this.state.type
@@ -90,14 +94,15 @@ class EditTrade extends Component{
 		let day = dateObj.substring(8, 10)	
 
 		const formated_date = year + "/" + month + "/" + day
-		const result = await fetch('/api/record-trade', {
+		const result = await fetch('/api/edit-trade', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				name: name,
+				index: index,
 				quantity: quantity,
+				name: name,
 				type: type,
 				date: formated_date,
 				price: price,
@@ -114,11 +119,40 @@ class EditTrade extends Component{
 				this.props.history.push('/')
 			}
 			else{
+				alert(result.error)
+			}
+		}
+	}
+
+
+	async handleDelete(event){
+		event.preventDefault()
+
+		const index = this.state.index
+		const result = await fetch('/api/delete-trade', {
+			method: 'POST',
+			header: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				index: index
+			})
+		}).then((res) => res.json())
+
+		if(result.status === 'ok'){
+			alert('Trade Deleted Successfully')
+			this.props.history.push('/journal')
+		}
+		else{
+			if(result.error === 'invalid-signature'){
+				this.props.history.push('/')
+			}
+			else{
 				alert('something is wrong')
 			}
 		}
 	}
-		
+
 	render(){
 		const title = this.state.title
 		const quantity = this.state.quantity
@@ -126,45 +160,101 @@ class EditTrade extends Component{
 		const date = this.state.date
 		const price = this.state.price
 		const close_price = this.state.price
+		const index = this.state.index 
 		return(
 			<div className="App-header">
-				<div className="heading">
-					<title> Login </title>
+				<div className="record-container">
+					<div className="record-heading">
+						<h1> Edit Trade: {title} </h1>
+					</div>
+					<h3> Leave field empty for no change </h3>
+					<form action = "/journal" method="get">
+						<button> Go Back </button>
+					</form>
+					<form  onSubmit = {this.handleDelete}>
+						<button onClick={this.handleDelete} value={index}>Delete This Trade</button>
+					</form> 
+					<form onSubmit = {this.handleSubmit}>
+						<div>
+							Name of trade (i.e 250/255 $SPY ):
+							<br></br>
+							<input 
+								type="text" 
+								placeholder="Name"
+								name="title" 
+								value={this.state.title}
+								onChange={this.handleChange}
+							/>
+						</div>
+						<br></br>
+						<div>
+							Quantity:
+							<br></br>
+							<input 
+								type="number" 
+								placeholder="0" 
+								name="quantity"
+								value={this.state.quantity}
+								onChange={this.handleChange}
+							/> 
+						</div>
+						<br></br>
+						<div>
+						Type of spread (i.e Credit, Debit, Condor, Butterfly):
+						<br></br>
+						<input 
+							type="text" 
+							placeholder="Debit or Credit" 
+							name="type"
+							value={this.state.type}
+							onChange={this.handleChange}
+						/> 
+						<br></br>
+						</div>
+						<br></br>
+						<div>
+							Date of Expiration:
+							<br></br>
+							<input
+								type="Date" 
+								placeholder="Expiration Date" 
+								name="date"
+								value={this.state.date}
+								onChange={this.handleChange}
+							/> 
+						</div>
+						<br></br>
+						<div>
+							Equity (if this is a net credit spread, make sure this is negative):
+							<br></br>
+							<input 
+								type="Number" 
+								placeholder="Price or Collateral" 
+								name="price"
+								value={this.state.price}
+								onChange={this.handleChange}
+							/> 
+						</div>
+						<br></br>
+						<div>
+							Price At Close (Leave empty if trade has not concluded yet):
+							<br></br>
+							<input 
+								type="Number" 
+								placeholder="Close Price" 
+								name="close_price"
+								value={this.state.close_price}
+								onChange={this.handleChange}
+							/> 
+						</div>
+
+						<br></br>
+						<br></br>
+						<Button type="submit"> Submit </Button>
+						<br></br>
+						<br></br>
+					</form>
 				</div>
-				<h1> Edit Trade </h1>
-				<h3> Leave field empty for no change </h3>
-				<form action = "/journal" method="get">
-					<button> Go Back </button>
-				</form>
-				<form id='delete-trade'>
-				</form>
-				<form id='edit-trade'>
-					Name of trade (i.e 2asdas50/255 $SPY ):
-					<br></br>
-					<input type = "text" id="name" placeholder={title} />	
-					<br></br>
-					Quantity:
-					<br></br>
-					<input type="number" placeholder={quantity} id="quantity"/> 
-					<br></br>
-					Type of spread (i.e Credit, Debit, Condor, Butterfly):
-					<br></br>
-					<input type = "text" id="type" placeholder={type}/>	
-					<br></br>
-					Date of Expiration:
-					<br></br>
-					<input type = "date" id="date" placeholder={date} />	
-					<br></br>
-					Equity (if this is a net credit spread, make sure this is negative):
-					<br></br>
-					<input type = "number" id="price" placeholder={price}/>	
-					<br></br>
-					Price At Close (Leave empty if trade has not concluded yet):
-					<br></br>
-					<input type = "number" id="close_price" placeholder={close_price}/>
-					<br></br>
-					<input type="submit" id="submit" placeholder="submit"/>
-				</form> 
 			</div>
 		)}
 	}
