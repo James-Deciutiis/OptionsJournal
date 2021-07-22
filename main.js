@@ -14,7 +14,7 @@ const calendar = require('./config/calendar-config')
 const app = express()
 
 //const SECRET = process.env.S3_SECRET
-const SECRET = "321H9FN4=93UI1QOFN4=98HAS9-D8H@9H29UFE!"
+const SECRET = "x"
 
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({extended:false}))
@@ -25,7 +25,7 @@ app.get("*", (req, res) => {
 	    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
-const client = new MongoClient("mongodb+srv://admin_thosonn:PZSdxQATXm6iNcX@optionsjournalcluster.yoiju.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"	, {
+const client = new MongoClient("x"	, {
 
 //const client = new MongoClient(process.env.MONGO_URI, {
 	useNewUrlParser: true,
@@ -305,7 +305,7 @@ app.post('/api/suggestions', async(req, res) => {
 	try{
 		if(validateUser()){
 			const [start_date, end_date] = createDates()
-			let API_Call = `https://finnhub.io/api/v1/calendar/earnings?from=${start_date}&to=${end_date}&token=c28qb6qad3if6b4c2h50`
+			let API_Call = `x`
 			let earnings = []
 			await fetch(API_Call , {
 			}).then(
