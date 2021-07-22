@@ -237,8 +237,9 @@ app.post('/api/edit-trade', async(req, res) => {
 			}
 						
 			trades[index] = entry
+			await ls.set('trades', trades)
+			trades = ls.get('trades')
 			await update(username, "trades", trades)
-			ls.set('trades', trades)
 		}
 		catch(error){
 			return res.json({status: 'error', error:error})

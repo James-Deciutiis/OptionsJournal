@@ -24,6 +24,7 @@ class Login extends Component {
 		event.preventDefault()
 		const username = this.state.username
 		const password = this.state.password
+		alert(username, password)
 
 
 		const result = await fetch('/api/login', {

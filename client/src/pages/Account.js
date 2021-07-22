@@ -13,8 +13,8 @@ class Account extends Component{
 			is_populated: Array(366).fill(false)
 		}
 		
-		const year = (new Date()).getFullYear();
-		this.years = Array.from(new Array(20),(val, index) => index + year);
+		const y = (new Date()).getFullYear();
+		this.years = Array.from(new Array(20),(val, index) => index + y);
 		
 		this.handleChange = this.handleChange.bind(this)
 		this.sendToTrade = this.sendToTrade.bind(this)
@@ -56,6 +56,7 @@ class Account extends Component{
 		event.preventDefault()
 
 		const new_year = this.state.year
+		alert(new_year)
 		const result = await fetch('/api/account', {
 			method: 'POST',
 			headers: {
@@ -138,7 +139,7 @@ class Account extends Component{
 		
 	handleChange(event){
 		this.setState({
-			[event.target.name]: event.target.value
+			year : event.target.value
 		})
 	}
 
@@ -180,13 +181,16 @@ class Account extends Component{
 					<form action="/change-password" method="get">
 						<Button type="Submit">Change Password</Button>
 					</form>
-					<select value= {this.year} onChange = {this.updateCalendar}>
-			     			{
-				            	this.years.map((y, index) => {
-							return <option key={`year${index}`} value={y}>{y}</option>
-						})}
-			    		</select>
-					<br></br>
+					<form onSubmit={this.updateCalendar}>
+						<select value={this.state.year} onChange={this.handleChange}>
+							{
+							this.years.map((y, index) => {
+								return <option value={y}>{y}</option>
+							})}
+						</select>
+						<br></br>
+						<input type="submit" value="Submit"/>
+					</form>
 					<h2>Year: {year}</h2>
 				</div>
 				<div className="calendar-container">

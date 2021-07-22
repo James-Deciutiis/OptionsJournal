@@ -1,7 +1,7 @@
 .home-container{
 	justify-content: center;
 	width:35%;
-	margin-top:-75px;
+	margin-top:-225px;
 	text-align: center;
 	overflow:hidden;
 	border-bottom-left-radius: 20px;
@@ -19,11 +19,11 @@
 	background-color: #111529;
 }
 
-@media screen and (max-width: 1300px){
+@media screen and (max-width: 1400px){
 	.home-container{
 		justify-content: center;
 		width:65%;
-		margin-top:-75px;
+		margin-top:-25px;
 		text-align: center;
 		overflow:hidden;
 		border-bottom-left-radius: 20px;

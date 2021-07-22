@@ -55,3 +55,21 @@
 	border-radius:30px;
 }
 
+@media screen and (max-width: 1400px){
+.date{
+	height: 15vh;
+	text-align: center;
+	border-style: solid;
+	border-width: thin;
+	border-radius:30px;
+}
+
+.month-container{
+	width:80%;
+	background-color: #111529;
+	border-style: hidden;
+	border-radius: 25px;
+	display: inline-block;
+	margin-bottom: 20px;
+}
+}
