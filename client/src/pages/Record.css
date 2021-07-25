@@ -16,3 +16,24 @@
 	border-style: hidden;
 	border-radius: 25px;
 }
+
+.record-content{
+	padding: 10px;
+	border:solid;
+}
+
+@media screen and (max-width: 1400px){
+	.record-container{
+		justify-content: center;
+		width:80%;
+		margin-top:100px;
+		text-align: center;
+		background-color: #111529;
+		border-style: hidden;
+		border-radius: 25px;
+	}
+
+	.record-content{
+		padding: 10px;
+	}
+}

@@ -30,3 +30,15 @@
 	border-style: hidden;
 	border-radius: 25px;
 }
+
+@media screen and (max-width: 1400px){
+	.suggestion-container{
+		justify-content: center;
+		width:80%;
+		margin-top:75px;
+		text-align: center;
+		background-color: #111529;
+		border-style: hidden;
+		border-radius: 25px;
+	}
+}

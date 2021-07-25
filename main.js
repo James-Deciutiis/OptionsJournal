@@ -25,13 +25,6 @@ app.get("*", (req, res) => {
 	    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
-const client = new MongoClient("x"	, {
-
-//const client = new MongoClient(process.env.MONGO_URI, {
-	useNewUrlParser: true,
-	connectTimeoutMS: 30000,
-	useUnifiedTopology: true
-})
 
 async function add(doc) {
     try {
@@ -40,13 +33,11 @@ async function add(doc) {
          const db = client.db("UsersTrades")
          const col = db.collection("Users/Trades")
          const p = await col.insertOne(doc)
-         const myDoc = await col.findOne()
-        } catch (err) {
+	 client.close()
+        } 
+	catch (err) {
          console.log(err.stack)
-     }
-     finally {
-        await client.close();
-    }
+     	}
 }
 
 async function find(username){
@@ -56,6 +47,7 @@ async function find(username){
          const db = client.db("UsersTrades")
          const col = db.collection("Users/Trades")
          const result = await col.findOne({username})
+	 client.close()
 	 if(result){
 	  return result
 	 }
@@ -68,25 +60,48 @@ async function find(username){
      	}
 }
 
-async function update(username_, obj_type, obj){
+async function updatePassword(username_, obj){
 	try{
          await client.connect()
          console.log("Connected correctly to server")
          const db = client.db("UsersTrades")
          const col = db.collection("Users/Trades")
 	 const filter = {username: username_}
-	 const options = {upsert: true}
+	 const options = {upsert: false}
 	 const updateDoc = {
 		$set: {
-			obj_type:
-				obj
+			"password": obj
 		},
 	};
 
 	 const result = await col.updateOne(filter, updateDoc, options)
+	 client.close()
         } 
 	catch (err) {
-         console.log(err.stack)
+            console.log(err.stack)
+     	}
+}
+
+async function updateTrades(username_, obj){
+	try{
+         await client.connect()
+         console.log("Connected correctly to server")
+         const db = client.db("UsersTrades")
+         const col = db.collection("Users/Trades")
+	 const filter = {username: username_}
+	 const options = {upsert: false}
+
+	 const updateDoc = {
+		$set: {
+			"trades": obj
+		},
+	};
+
+	 const result = await col.updateOne(filter, updateDoc, options)
+	 client.close()
+        } 
+	catch (err) {
+            console.log(err.stack)
      	}
 }
 
@@ -134,6 +149,10 @@ app.listen(process.env.PORT || 3000, function(){
 		  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 })
 
+app.post('/api/validate', async (req, res) =>{
+	return res.json({status: validateUser()})
+})
+
 app.post('/api/login', async (req, res) => {
 	const { username, password } = req.body
 	const user = await find(username)
@@ -157,6 +176,10 @@ app.post('/api/login', async (req, res) => {
 app.post('/api/register', async (req, res) => {
 	const { username, password: plainTextPassword } = req.body
 	const password = await bcrypt.hash(plainTextPassword, 10)
+	if(await find(username)){
+		return res.json({ status:'error', error:'Username taken'})
+	}
+
 
 	if(!username || plainTextPassword.length < 9 || typeof username !== 'string' || typeof plainTextPassword !== 'string'){
 		return res.json({ status: 'error', error: 'Empty or invalid username/password (NOTE, make sure password is at least 9 characters long).'})
@@ -170,12 +193,8 @@ app.post('/api/register', async (req, res) => {
 		})
 		await add(response)
 	}
-	catch(error){
-		if(error.code === 11000){
-			return res.json({ status:'error', error:'Duplicate username'})
-		}
-		
-		throw error
+	catch(err){
+		return res.json({status: 'error', error:error})
 	}
 
 	return res.json({status: 'ok'})
@@ -190,7 +209,7 @@ app.post('/api/record-trade', async (req, res) => {
 			try{
 				trades.push({ "name" : name, "quantity": quantity, "type": type, "date": date, "price": price, "close_price" : close_price})
 				ls.set('trades', trades)
-				await update(username, "trades", trades)
+				await updateTrades(username, trades)
 			}
 			catch(error){
 				console.log(error)
@@ -214,8 +233,6 @@ app.post('/api/edit-trade', async(req, res) => {
 		const username = jwt.verify(ls.get('token'), SECRET).username
 		try{
 			let trades = ls.get('trades')
-			const user = await find(username)
-			const id = user._id
 			let entry = {"name": trades[index].name, "quantity": trades[index].quantity, "type": trades[index].type, "date": trades[index].date, "price" : trades[index].price, "close_price" : trades[index].close_price} 
 			if(name){
 				entry.name  = name
@@ -239,7 +256,7 @@ app.post('/api/edit-trade', async(req, res) => {
 			trades[index] = entry
 			await ls.set('trades', trades)
 			trades = ls.get('trades')
-			await update(username, "trades", trades)
+			await updateTrades(username, trades)
 		}
 		catch(error){
 			return res.json({status: 'error', error:error})
@@ -262,7 +279,7 @@ app.post('/api/delete-trade', async(req, res) => {
 			trades = ls.get('trades')
 			trades.splice(index, 1)
 			ls.set('trades', trades)
-			await update(username, "trades", trades)
+			await updateTrades(username, trades)
 		}
 		catch(error){
 			return res.json({status: 'error', error:'Session expired, please login again'})
@@ -280,20 +297,19 @@ app.post('/api/delete-trade', async(req, res) => {
 
 app.post('/api/change-password', async (req, res) => {
 	if(validateUser()){
-		let token = ls.get('token')
 		const { newpassword, newpassword_confirm} = req.body
 		if(newpassword !== newpassword_confirm || newpassword.length < 9){
 			return res.json({ status:'error', error:'Passwords are not the same or are not long enought (NOTE, make sure password is at least 9 characters long)' })
 		}
 		
-		const password = await bcrypt.hash(newpassword, 10)
 		try{
-			const user = jwt.verify(token, SECRET)
-			const _id = user.id
-			await update(username, "password", password)
+			const password = await bcrypt.hash(newpassword, 10)
+			const username = jwt.verify(ls.get('token'), SECRET).username
+			await updatePassword(username, password)
+			return res.json({ status:'ok' })
 		}
 		catch(error){
-			return res.json({ status:'error', error:'invalid-signature' })
+			return res.json({ status:'error', error:error})
 		}
 	}
 	else{
@@ -305,7 +321,6 @@ app.post('/api/suggestions', async(req, res) => {
 	try{
 		if(validateUser()){
 			const [start_date, end_date] = createDates()
-			let API_Call = `x`
 			let earnings = []
 			await fetch(API_Call , {
 			}).then(

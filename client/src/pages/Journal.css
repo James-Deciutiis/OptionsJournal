@@ -4,13 +4,14 @@
 	border-top-right-radius: 20px;
 	text-align: center;
 	border-bottom: 1px solid;
+	padding: 10px;
 	background: linear-gradient(90deg, rgb(110, 94, 254) 0%, rgba(73, 63, 252,1) 100%);
 }
 
 .journal-container{
 	justify-content: center;
 	width:50%;
-	margin-top: 100px;
+	margin-top: -250px;
 	background-color: #111529;
 	border-style: hidden;
 	border-radius: 25px;
@@ -49,11 +50,11 @@
 	font-size: 12px;
 }
 
-@media screen and (max-width: 800px){
+@media screen and (max-width: 1400px){
 	.journal-container{
 		justify-content: center;
-		margin-top: 100px;
-		width:98%;
+		margin-top: -250px;
+		width:80%;
 		background-color: #111529;
 		border-style: hidden;
 		border-radius: 25px;

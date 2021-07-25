@@ -75,11 +75,10 @@ class Journal extends Component{
 			<br></br>
 			<div className="journal-container">
 				<div className="heading">
-					<h3> Journal </h3>
+					<h5> Journal </h5>
 					<form action = "/record">
 						<Button> Add + </Button>
 					</form>
-					<br></br>
 				</div>
 				<div className="journal-row-2">
 					<span>Name</span><span>Quantity</span><span>Type</span><span>Expiration Date</span><span>Price</span><span>Close Price</span><span>Profit/Loss</span><span> Edit/Delete  </span>

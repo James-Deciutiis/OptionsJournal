@@ -1,3 +1,20 @@
+.widget-container{	
+	display: grid;
+	justify-content: center;
+	grid-template-columns: 1fr 1fr;
+	background-color: #111529;
+	border: solid;
+	text-align: center;
+	overflow:hidden;
+	border-radius: 20px;
+}
+
+.widget-content{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 10px;
+}
 .cal-heading{
 	text-align: center;
 }
@@ -14,6 +31,8 @@
 	border-radius: 25px;
 	display: inline-block;
 	margin-bottom: 20px;
+	border: solid;
+	padding: 10px;
 }
 
 .month-heading{
@@ -56,20 +75,21 @@
 }
 
 @media screen and (max-width: 1400px){
-.date{
-	height: 15vh;
-	text-align: center;
-	border-style: solid;
-	border-width: thin;
-	border-radius:30px;
-}
+	.date{
+		height: 15vh;
+		text-align: center;
+		border-style: solid;
+		border-width: thin;
+		border-radius:30px;
+	}
 
-.month-container{
-	width:80%;
-	background-color: #111529;
-	border-style: hidden;
-	border-radius: 25px;
-	display: inline-block;
-	margin-bottom: 20px;
-}
+	.month-container{
+		width:80%;
+		background-color: #111529;
+		border-style: hidden;
+		border-radius: 25px;
+		display: inline-block;
+		border: solid;
+		margin-bottom: 20px;
+	}
 }

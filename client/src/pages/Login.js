@@ -48,8 +48,7 @@ class Login extends Component {
 
 	render(){
 		return (
-			<div className = "App-header">
-				<div className = "log-container">
+			<div className = "log-container">
 					<div className="heading">
 						<h1> Login </h1>
 					</div>
@@ -79,7 +78,6 @@ class Login extends Component {
 					<br></br>
 				</form>
 				</div>
-			</div>
 		)
 	} 
 }

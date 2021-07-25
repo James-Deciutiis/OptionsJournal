@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Button } from "../components/Button.js"
+import { Navbar } from "../components/Navbar.js"
 import "./Journal.css"
 
 class EditTrade extends Component{
@@ -222,6 +223,8 @@ class EditTrade extends Component{
 								value={this.state.date}
 								onChange={this.handleChange}
 							/> 
+							<br></br>
+							Currently: {this.state.date}
 						</div>
 						<br></br>
 						<div>

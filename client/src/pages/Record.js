@@ -102,87 +102,89 @@ class Record extends Component{
 					<div className="record-heading">
 						<h1> Record Your Trade </h1>
 					</div>
-					<form onSubmit = {this.handleSubmit}>
-						<br></br>
-						<div>
-							Name of trade (i.e 250/255 $SPY ):
+					<div className="record-content">
+						<form onSubmit = {this.handleSubmit}>
+							<br></br>
+							<div>
+								Name of trade (i.e 250/255 $SPY ):
+								<br></br>
+								<input 
+									type="text" 
+									placeholder="Name"
+									name="title" 
+									value={this.state.title}
+									onChange={this.handleChange}
+								/>
+							</div>
+							<br></br>
+							<div>
+								Quantity:
+								<br></br>
+								<input 
+									type="number" 
+									placeholder="0" 
+									name="quantity"
+									value={this.state.quantity}
+									onChange={this.handleChange}
+								/> 
+							</div>
+							<br></br>
+							<div>
+							Type of spread (i.e Credit, Debit, Condor, Butterfly):
 							<br></br>
 							<input 
 								type="text" 
-								placeholder="Name"
-								name="title" 
-								value={this.state.title}
-								onChange={this.handleChange}
-							/>
-						</div>
-						<br></br>
-						<div>
-							Quantity:
-							<br></br>
-							<input 
-								type="number" 
-								placeholder="0" 
-								name="quantity"
-								value={this.state.quantity}
+								placeholder="Debit or Credit" 
+								name="type"
+								value={this.state.type}
 								onChange={this.handleChange}
 							/> 
-						</div>
-						<br></br>
-						<div>
-						Type of spread (i.e Credit, Debit, Condor, Butterfly):
-						<br></br>
-						<input 
-							type="text" 
-							placeholder="Debit or Credit" 
-							name="type"
-							value={this.state.type}
-							onChange={this.handleChange}
-						/> 
-						<br></br>
-						</div>
-						<br></br>
-						<div>
-							Date of Expiration:
 							<br></br>
-							<input
-								type="Date" 
-								placeholder="Expiration Date" 
-								name="date"
-								value={this.state.date}
-								onChange={this.handleChange}
-							/> 
-						</div>
-						<br></br>
-						<div>
-							Equity (if this is a net credit spread, make sure this is negative):
+							</div>
 							<br></br>
-							<input 
-								type="Number" 
-								placeholder="Price or Collateral" 
-								name="price"
-								value={this.state.price}
-								onChange={this.handleChange}
-							/> 
-						</div>
-						<br></br>
-						<div>
-							Price At Close (Leave empty if trade has not concluded yet):
+							<div>
+								Date of Expiration:
+								<br></br>
+								<input
+									type="Date" 
+									placeholder="Expiration Date" 
+									name="date"
+									value={this.state.date}
+									onChange={this.handleChange}
+								/> 
+							</div>
 							<br></br>
-							<input 
-								type="Number" 
-								placeholder="Close Price" 
-								name="close_price"
-								value={this.state.close_price}
-								onChange={this.handleChange}
-							/> 
-						</div>
+							<div>
+								Equity (if this is a net credit spread, make sure this is negative):
+								<br></br>
+								<input 
+									type="Number" 
+									placeholder="Price or Collateral" 
+									name="price"
+									value={this.state.price}
+									onChange={this.handleChange}
+								/> 
+							</div>
+							<br></br>
+							<div>
+								Price At Close (Leave empty if trade has not concluded yet):
+								<br></br>
+								<input 
+									type="Number" 
+									placeholder="Close Price" 
+									name="close_price"
+									value={this.state.close_price}
+									onChange={this.handleChange}
+								/> 
+							</div>
 
-						<br></br>
-						<br></br>
-						<Button type="submit"> Submit </Button>
-						<br></br>
-						<br></br>
-					</form>
+							<br></br>
+							<br></br>
+							<Button type="submit"> Submit </Button>
+							<br></br>
+							<br></br>
+						</form>
+					</div>
 				</div>
 			</div>
 		)

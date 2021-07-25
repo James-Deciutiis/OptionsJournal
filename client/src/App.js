@@ -20,22 +20,24 @@ class App extends Component{
 	render(){
 		const App = () => (
 		<div>
-			<Navbar/>
 			<Switch>
-				<Route exact path='/' component={Home}/>
-				<Route path='/list' component={List}/>
 				<Route path='/login' component={Login}/>
+				<Route exact path='/' component={Home}/>
 				<Route path='/register' component={Register}/>
-				<Route path='/account' component={Account}/>
-				<Route path='/journal' component={Journal}/>
-				<Route path='/record' component={Record}/>
-				<Route path='/change-password' component={ChangePassword}/>
-				<Route path='/suggestions' component={Suggestions}/>
-				<Route path='/logout' component={Logout}/>
-				<Route path='/trade' component={Trade}/>
-				<Route path='/edit-trade' component={EditTrade}/>
+				<div>
+					<Navbar/>
+					<Route path='/list' component={List}/>
+					<Route path='/account' component={Account}/>
+					<Route path='/journal' component={Journal}/>
+					<Route path='/record' component={Record}/>
+					<Route path='/change-password' component={ChangePassword}/>
+					<Route path='/suggestions' component={Suggestions}/>
+					<Route path='/logout' component={Logout}/>
+					<Route path='/trade' component={Trade}/>
+					<Route path='/edit-trade' component={EditTrade}/>
+				</div>
     	    		</Switch>
-     	</div>
+     		</div>
     	)
     
 		return (

@@ -37,13 +37,15 @@ class ChangePassword extends Component{
 
 		if(result.status === 'ok'){
 			alert('Password Change Successful')
+			this.props.history.push('/account')
 		}
 		else{
 			if(result.error === 'invalid-signature'){
+				alert(result.error)
 				this.props.history.push('/')
 			}
 			else{
-				alert('something is wrong')
+				alert(result.error)
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Button } from "../components/Button.js"
-import "./Account.css"
+import './Account.css'
+
 
 class Account extends Component{
 	constructor(props){
@@ -174,24 +175,34 @@ class Account extends Component{
 		const trade_data = this.state.trade_data
 		const is_populated = this.state.is_populated
 
-		return (
-			<div className="App-header">
+		
+		return(
+		<div className="App-header">
 				<div className = "cal-heading">
 					<h1> Dashboard </h1>
-					<form action="/change-password" method="get">
-						<Button type="Submit">Change Password</Button>
-					</form>
-					<form onSubmit={this.updateCalendar}>
-						<select value={this.state.year} onChange={this.handleChange}>
-							{
-							this.years.map((y, index) => {
-								return <option value={y}>{y}</option>
-							})}
-						</select>
-						<br></br>
-						<input type="submit" value="Submit"/>
-					</form>
-					<h2>Year: {year}</h2>
+						<div className = "widget-container">
+							<div className = "widget-content">
+								<form action="/change-password" method="get">
+									<Button type="Submit">Change Password</Button>
+								</form>
+							</div>
+							<div className = "widget-content">
+								<form onSubmit={this.updateCalendar}>
+									<h8> Change Year </h8>
+									<br></br>
+									<select value={this.state.year} onChange={this.handleChange}>
+										{
+										this.years.map((y, index) => {
+											return <option value={y}>{y}</option>
+										})}
+									</select>
+									<br></br>
+									<br></br>
+									<Button type="submit"> Change Year </Button>
+								</form>
+							</div>
+						</div>
+						<h2>Year: {year}</h2>
 				</div>
 				<div className="calendar-container">
 					{calendar.map((month, index_one) => (
@@ -252,28 +263,6 @@ class Account extends Component{
 					))}
 				</div>
 			</div>
-		)	
-	}
+		)}
 }
-
-																	/*{trade_data[index_four].close_price ? (
-																		<div>
-																			<h5> Profit/loss </h5>
-																				{(trade_data[index_four].close_price - trade_data[index_four].price) > 0 ? (
-																					<span>
-																						up : 
-																						{(trade_data[index_four].close_price - trade_data[index_four].price)}
-																					</span>
-																				) : (
-																					<span>
-																						down : 
-																						{(trade_data[index_four].close_price - trade_data[index_four].price)}
-																					</span>
-																				)}
-																		</div>
-																	):(
-																		<div>
-																		</div>
-																	)}*/
-
 export default Account
