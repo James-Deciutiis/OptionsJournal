@@ -49,7 +49,7 @@ class Suggestions extends Component{
 						<span>$Symbol</span><span>Date of Earnings</span><span>Hours(BMO for Before market hours, AMC for after market close)</span>
 					</div>
 						{earnings.map((earning, index) => (
-							<div className = {index % 2 != 0 ? ("row") : ("row-2")} >
+							<div className = {index % 2 !== 0 ? ("row") : ("row-2")} >
 								<span>{earnings[index].symbol}</span><span>{earnings[index].date}</span><span>{earnings[index].hour}</span>
 							</div>
 						))}

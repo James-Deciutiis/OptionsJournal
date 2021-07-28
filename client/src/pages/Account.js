@@ -155,7 +155,7 @@ class Account extends Component{
 	equalDates(tradeObj, date){
 		const [trade_year, trade_month, trade_day] = this.getTradeDate(tradeObj)
 
-		return trade_year == date[0] && trade_month == date[1] && trade_day == date[2]
+		return trade_year === date[0] && trade_month === date[1] && trade_day === date[2]
 	}
 
 	checkPopulated(is_populated, date){

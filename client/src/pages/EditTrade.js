@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Button } from "../components/Button.js"
-import { Navbar } from "../components/Navbar.js"
 import "./Journal.css"
 
 class EditTrade extends Component{
@@ -132,13 +131,14 @@ class EditTrade extends Component{
 		const index = this.state.index
 		const result = await fetch('/api/delete-trade', {
 			method: 'POST',
-			header: {
+			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
 				index: index
 			})
 		}).then((res) => res.json())
+		alert(index)
 
 		if(result.status === 'ok'){
 			alert('Trade Deleted Successfully')
@@ -156,12 +156,8 @@ class EditTrade extends Component{
 
 	render(){
 		const title = this.state.title
-		const quantity = this.state.quantity
-		const type = this.state.type
-		const date = this.state.date
-		const price = this.state.price
-		const close_price = this.state.price
 		const index = this.state.index 
+
 		return(
 			<div className="App-header">
 				<div className="record-container">

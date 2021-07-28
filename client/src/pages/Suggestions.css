@@ -27,7 +27,7 @@
 	margin-top:75px;
 	text-align: center;
 	background-color: #111529;
-	border-style: hidden;
+	border: solid;
 	border-radius: 25px;
 }
 
@@ -38,7 +38,7 @@
 		margin-top:75px;
 		text-align: center;
 		background-color: #111529;
-		border-style: hidden;
+		border: solid;
 		border-radius: 25px;
 	}
 }

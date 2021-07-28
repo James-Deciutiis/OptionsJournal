@@ -12,6 +12,7 @@
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	background-color: #111529;
+	padding:10px;
 }
 
 .home-col{
@@ -34,10 +35,11 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		background-color: #111529;
+		padding:12px;
 	}
 
 	.home-col{
-		font-size:18px;
+		font-size:16px;
 		background-color: #111529;
 	}
 }

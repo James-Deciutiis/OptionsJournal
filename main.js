@@ -15,6 +15,7 @@ const app = express()
 
 //const SECRET = process.env.S3_SECRET
 const SECRET = "x"
+const MONGO_URI = "mongodb+srv://admin_thosonn:PZSdxQATXm6iNcX@optionsjournalcluster.yoiju.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({extended:false}))
@@ -28,6 +29,7 @@ app.get("*", (req, res) => {
 
 async function add(doc) {
     try {
+	 const client = new MongoClient(MONGO_URI, {useNewUrlParser: true, connectTimeoutMS: 30000, useUnifiedTopology: true})
          await client.connect()
          console.log("Connected correctly to server")
          const db = client.db("UsersTrades")
@@ -42,6 +44,7 @@ async function add(doc) {
 
 async function find(username){
 	try{
+	 const client = new MongoClient(MONGO_URI, {useNewUrlParser: true, connectTimeoutMS: 30000, useUnifiedTopology: true})
          await client.connect()
          console.log("Connected correctly to server")
          const db = client.db("UsersTrades")
@@ -62,6 +65,7 @@ async function find(username){
 
 async function updatePassword(username_, obj){
 	try{
+	 const client = new MongoClient(MONGO_URI, {useNewUrlParser: true, connectTimeoutMS: 30000, useUnifiedTopology: true})
          await client.connect()
          console.log("Connected correctly to server")
          const db = client.db("UsersTrades")
@@ -84,6 +88,7 @@ async function updatePassword(username_, obj){
 
 async function updateTrades(username_, obj){
 	try{
+	 const client = new MongoClient(MONGO_URI, {useNewUrlParser: true, connectTimeoutMS: 30000, useUnifiedTopology: true})
          await client.connect()
          console.log("Connected correctly to server")
          const db = client.db("UsersTrades")
@@ -297,7 +302,7 @@ app.post('/api/delete-trade', async(req, res) => {
 
 app.post('/api/change-password', async (req, res) => {
 	if(validateUser()){
-		const { newpassword, newpassword_confirm} = req.body
+		const { newpassword, newpassword_confirm } = req.body
 		if(newpassword !== newpassword_confirm || newpassword.length < 9){
 			return res.json({ status:'error', error:'Passwords are not the same or are not long enought (NOTE, make sure password is at least 9 characters long)' })
 		}
@@ -321,6 +326,7 @@ app.post('/api/suggestions', async(req, res) => {
 	try{
 		if(validateUser()){
 			const [start_date, end_date] = createDates()
+			let API_Call = `https://finnhub.io/api/v1/calendar/earnings?from=${start_date}&to=${end_date}&token=c28qb6qad3if6b4c2h50`
 			let earnings = []
 			await fetch(API_Call , {
 			}).then(

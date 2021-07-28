@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Button } from "../components/Button.js"
 
 class Trade extends Component{
 	constructor(props){
@@ -54,13 +53,13 @@ class Trade extends Component{
 					{trades.map((entry, index_one) => (
 						<div>
 							{!trades[index_one].close_price ?  (
-							<div className={index_one % 2 == 0 ? "journal-row":"journal-row-2"}>
+							<div className={index_one % 2 === 0 ? "journal-row":"journal-row-2"}>
 								<span>{trades[index_one].name}</span><span>{trades[index_one].quantity}</span><span>{trades[index_one].type}</span><span>{trades[index_one].date}</span><span>{trades[index_one].price}</span><span>N/A</span><span>N/A</span>
 								<span>
 								</span>
 							</div>
 							) : (
-							<div className={index_one % 2 == 0 ? "journal-row":"journal-row-2"}>
+							<div className={index_one % 2 === 0 ? "journal-row":"journal-row-2"}>
 								<span>{trades[index_one].name}</span><span>{trades[index_one].quantity}</span><span>{trades[index_one].type}</span><span>{trades[index_one].date}</span><span>{trades[index_one].price}</span><span>{trades[index_one].close_price}</span>
 								{((trades[index_one].close_price - trades[index_one].price) * trades[index_one].quantity) > 0 ? (
 									<span>

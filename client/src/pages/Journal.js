@@ -75,10 +75,14 @@ class Journal extends Component{
 			<br></br>
 			<div className="journal-container">
 				<div className="heading">
-					<h5> Journal </h5>
+					<h7> Journal </h7>
+					<br></br>
+					<br></br>
 					<form action = "/record">
 						<Button> Add + </Button>
 					</form>
+					<br></br>
+					<h10> Total Profit/loss: {this.state.total_pl}</h10>
 				</div>
 				<div className="journal-row-2">
 					<span>Name</span><span>Quantity</span><span>Type</span><span>Expiration Date</span><span>Price</span><span>Close Price</span><span>Profit/Loss</span><span> Edit/Delete  </span>
@@ -86,7 +90,7 @@ class Journal extends Component{
 				{journal.map((entry, index_one) => (
 					<div>
 						{!journal[index_one].close_price ?  (
-						<div className={index_one % 2 == 0 ? "journal-row":"journal-row-2"}>
+						<div className={index_one % 2 === 0 ? "journal-row":"journal-row-2"}>
 							<span>{journal[index_one].name}</span><span>{journal[index_one].quantity}</span><span>{journal[index_one].type}</span><span>{journal[index_one].date}</span><span>{journal[index_one].price}</span><span>N/A</span><span>N/A</span>
 							<span>
 								<form action = "/edit-trade" method="post">
@@ -98,7 +102,7 @@ class Journal extends Component{
 							</span>
 						</div>
 						) : (
-						<div className={index_one % 2 == 0 ? "journal-row":"journal-row-2"}>
+						<div className={index_one % 2 === 0 ? "journal-row":"journal-row-2"}>
 							<span>{journal[index_one].name}</span><span>{journal[index_one].quantity}</span><span>{journal[index_one].type}</span><span>{journal[index_one].date}</span><span>{journal[index_one].price}</span><span>{journal[index_one].close_price}</span>
 							{((journal[index_one].close_price - journal[index_one].price) * journal[index_one].quantity) > 0 ? (
 								<span>
@@ -118,9 +122,6 @@ class Journal extends Component{
 				))}
 					<br></br>
 			</div>
-				
-			<h5> Total Profit/loss: </h5>
-				{this.state.total_pl}
 		</div>
 		)
 	}
