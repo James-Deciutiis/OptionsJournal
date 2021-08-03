@@ -13,9 +13,7 @@ const fetch = require('node-fetch')
 const calendar = require('./config/calendar-config')
 const app = express()
 
-//const SECRET = process.env.S3_SECRET
-const SECRET = "x"
-const MONGO_URI = "mongodb+srv://admin_thosonn:PZSdxQATXm6iNcX@optionsjournalcluster.yoiju.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+const SECRET = process.env.S3_SECRET
 
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({extended:false}))
@@ -31,7 +29,6 @@ async function add(doc) {
     try {
 	 const client = new MongoClient(MONGO_URI, {useNewUrlParser: true, connectTimeoutMS: 30000, useUnifiedTopology: true})
          await client.connect()
-         console.log("Connected correctly to server")
          const db = client.db("UsersTrades")
          const col = db.collection("Users/Trades")
          const p = await col.insertOne(doc)
@@ -46,7 +43,6 @@ async function find(username){
 	try{
 	 const client = new MongoClient(MONGO_URI, {useNewUrlParser: true, connectTimeoutMS: 30000, useUnifiedTopology: true})
          await client.connect()
-         console.log("Connected correctly to server")
          const db = client.db("UsersTrades")
          const col = db.collection("Users/Trades")
          const result = await col.findOne({username})
@@ -67,7 +63,6 @@ async function updatePassword(username_, obj){
 	try{
 	 const client = new MongoClient(MONGO_URI, {useNewUrlParser: true, connectTimeoutMS: 30000, useUnifiedTopology: true})
          await client.connect()
-         console.log("Connected correctly to server")
          const db = client.db("UsersTrades")
          const col = db.collection("Users/Trades")
 	 const filter = {username: username_}
@@ -161,9 +156,7 @@ app.post('/api/validate', async (req, res) =>{
 app.post('/api/login', async (req, res) => {
 	const { username, password } = req.body
 	const user = await find(username)
-	//const user = await User.findOne({ username }).lean()
 
-	console.log(user)
 	if(!user){
 		return res.json({ status: 'error', error: 'Invalid username/password' })
 	}
@@ -217,7 +210,6 @@ app.post('/api/record-trade', async (req, res) => {
 				await updateTrades(username, trades)
 			}
 			catch(error){
-				console.log(error)
 				return res.json({status: 'error', error:'Session expired, please login again'})
 			}
 
@@ -326,7 +318,6 @@ app.post('/api/suggestions', async(req, res) => {
 	try{
 		if(validateUser()){
 			const [start_date, end_date] = createDates()
-			let API_Call = `https://finnhub.io/api/v1/calendar/earnings?from=${start_date}&to=${end_date}&token=c28qb6qad3if6b4c2h50`
 			let earnings = []
 			await fetch(API_Call , {
 			}).then(
@@ -364,7 +355,6 @@ app.post('/api/edit', function(req, res){
 			return res.json({ status: 'ok'})
 		}
 		else{
-			console.log('HERE')
 			return res.json({status: 'error', error: 'invalid-signature'})
 		}
 	}
@@ -372,7 +362,6 @@ app.post('/api/edit', function(req, res){
 		throw error
 	}
 			
-	console.log('HERE')
 	return res.json({status: 'error', error: 'something is wrong'})
 })
 

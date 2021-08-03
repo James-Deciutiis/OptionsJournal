@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { Button } from "../components/Button.js"
 import "./Record.css"
 
+toast.configure()
 class Record extends Component{
 	constructor(props){
 		super(props)
@@ -41,11 +44,9 @@ class Record extends Component{
 		if(result.status === 'ok'){
 		}
 		else{
+			toast.error(result.error)
 			if(result.error === 'invalid-signature'){
 				this.props.history.push('/')
-			}
-			else{
-				alert('something is wrong')
 			}
 		}
 	}
@@ -81,15 +82,13 @@ class Record extends Component{
 		}).then((res) => res.json())
 
 		if(result.status === 'ok'){
-			alert('Trade Recorded Successfully')
+			toast.success(`Trade ${name} Recorded Successfully`)
 			this.props.history.push('/journal')
 		}
 		else{
+			toast.error(result.error)
 			if(result.error === 'invalid-signature'){
 				this.props.history.push('/')
-			}
-			else{
-				alert('something is wrong')
 			}
 		}
 	}
@@ -106,7 +105,7 @@ class Record extends Component{
 						<form onSubmit = {this.handleSubmit}>
 							<br></br>
 							<div>
-								Name of trade (i.e 250/255 $SPY ):
+								Name of trade <div className = "tooltip"> (?) <span className="tooltiptext"> i.e 250/255 $SPY </span></div>
 								<br></br>
 								<input 
 									type="text" 
@@ -130,7 +129,7 @@ class Record extends Component{
 							</div>
 							<br></br>
 							<div>
-							Type of spread (i.e Credit, Debit, Condor, Butterfly):
+							Type of spread <div className = "tooltip"> (?) <span className="tooltiptext"> i.e Credit, Debit, Condor, Butterfly </span></div>
 							<br></br>
 							<input 
 								type="text" 
@@ -155,7 +154,7 @@ class Record extends Component{
 							</div>
 							<br></br>
 							<div>
-								Equity (if this is a net credit spread, make sure this is negative):
+								Equity Per Spread Or Contract <div className = "tooltip"> (?) <span className="tooltiptext"> if this is a net credit spread, make sure this is negative</span></div>
 								<br></br>
 								<input 
 									type="Number" 
@@ -167,7 +166,7 @@ class Record extends Component{
 							</div>
 							<br></br>
 							<div>
-								Price At Close (Leave empty if trade has not concluded yet):
+								Price At Close Per Spread or Contract <div className = "tooltip"> (?) <span className="tooltiptext"> Leave empty if trade has not concluded yet </span></div>
 								<br></br>
 								<input 
 									type="Number" 

@@ -10,10 +10,10 @@
 
 .journal-container{
 	justify-content: center;
-	width:50%;
+	width:40%;
 	display: block;
 	position: absolute;
-	top: 15%;
+	top: 25%;
 	background-color: #111529;
 	z-index: 100;
  	margin-bottom:10px;

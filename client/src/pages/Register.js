@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { Button } from "../components/Button.js"
 
+toast.configure()
 class Register extends Component {
 	constructor(props){
 		super(props)
@@ -36,10 +39,11 @@ class Register extends Component {
 		}).then((res) => res.json())
 
 		if(result.status === 'ok'){
+			toast.success(`New Account ${username} Created Successfully!`)
 			this.props.history.push('/')
 		}
 		else{
-			alert(result.error)
+			toast.error(result.error)
 		}
 	}
 

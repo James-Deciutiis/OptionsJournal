@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { Button } from "../components/Button.js"
 import './Account.css'
 
-
+toast.configure()
 class Account extends Component{
 	constructor(props){
 		super(props)
@@ -44,11 +46,9 @@ class Account extends Component{
 			this.setState({ trade_data: result.trade_data })
 		}
 		else{
+			toast.error(result.error)
 			if(result.error === 'invalid-signature'){
 				this.props.history.push('/')
-			}
-			else{
-				alert('something is wrong')
 			}
 		}
 	}
@@ -57,7 +57,6 @@ class Account extends Component{
 		event.preventDefault()
 
 		const new_year = this.state.year
-		alert(new_year)
 		const result = await fetch('/api/account', {
 			method: 'POST',
 			headers: {
@@ -69,17 +68,16 @@ class Account extends Component{
 		}).then((res) => res.json())
 
 		if(result.status === 'ok'){
+			toast.success(`Year Changed to ${new_year}`)
 			this.setState({ calendar: result.calendar })
 			this.setState({ months: result.months })
 			this.setState({ year: result.year })
 			this.setState({ trade_data: result.trade_data })
 		}
 		else{
+			toast.error(result.error)
 			if(result.error === 'invalid-signature'){
 				this.props.history.push('/')
-			}
-			else{
-				alert('something is wrong')
 			}
 		}
 	}
@@ -100,11 +98,9 @@ class Account extends Component{
 			this.props.history.push('/')
 		}
 		else{
+			toast.error(result.error)
 			if(result.error === 'invalid-signature'){
 				this.props.history.push('/')
-			}
-			else{
-				alert('something is wrong')
 			}
 		}
 	}
@@ -127,12 +123,9 @@ class Account extends Component{
 			this.props.history.push('/trade')
 		}
 		else{
+			toast.error(result.error)
 			if(result.error === 'invalid-signature'){
 				this.props.history.push('/')
-			}
-			else{
-				alert('something is wrong')
-				alert(result.error)
 			}
 		}
 	}

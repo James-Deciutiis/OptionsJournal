@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { Button } from "../components/Button.js"
 import "./Home.css"
 
 
+toast.configure()
 class Home extends Component {
 	constructor(props){
 		super(props)
@@ -38,10 +41,11 @@ class Home extends Component {
 		}).then((res) => res.json())
 
 		if(result.status === 'ok'){
+			toast.success(`Welcome ${username}!`)
 			this.props.history.push('/account')
 		}
 		else{
-			alert(result.error)
+			toast.error(result.error)
 		}
 	}
 

@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { Button } from "../components/Button.js"
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import "./Journal.css"
 
+toast.configure()
 class Journal extends Component{
 	constructor(props){
 		super(props)
@@ -31,11 +34,9 @@ class Journal extends Component{
 			this.setState({ total_pl : result.total_pl })
 		}
 		else{
+			toast.error(result.error)
 			if(result.error === 'invalid-signature'){
 				this.props.history.push('/')
-			}
-			else{
-				alert('something is wrong')
 			}
 		}
 	}
@@ -58,12 +59,9 @@ class Journal extends Component{
 			this.props.history.push('/edit-trade')
 		}
 		else{
+			toast.error(result.error)
 			if(result.error === 'invalid-signature'){
 				this.props.history.push('/')
-			}
-			else{
-				alert('something is wrong')
-				alert(result.error)
 			}
 		}
 	}

@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { Button } from "../components/Button.js"
 
+toast.configure()
 class ChangePassword extends Component{
 	constructor(props){
 		super(props)
@@ -36,16 +39,13 @@ class ChangePassword extends Component{
 		}).then((res) => res.json())
 
 		if(result.status === 'ok'){
-			alert('Password Change Successful')
+			toast.success('Password Change Successful')
 			this.props.history.push('/account')
 		}
 		else{
+			toast.error(result.error)
 			if(result.error === 'invalid-signature'){
-				alert(result.error)
 				this.props.history.push('/')
-			}
-			else{
-				alert(result.error)
 			}
 		}
 	}

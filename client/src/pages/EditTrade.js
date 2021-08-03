@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { Button } from "../components/Button.js"
 import "./Journal.css"
 
+toast.configure()
 class EditTrade extends Component{
 	constructor(props){
 		super(props)
@@ -51,33 +54,13 @@ class EditTrade extends Component{
 			this.setState({index: result.current_index})
 		}
 		else{
+			toast.error(result.error)
 			if(result.error === 'invalid-signature'){
-			}
-			else{
-				alert(result.error)
+				this.props.history.push('/')
 			}
 		}
 	}
 
-	async deleteTrade(event){
-		event.preventDefault()
-		const result = await fetch('/api/delete-trade', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-			})
-		}).then((res) => res.json())
-	
-		if(result.status === 'ok'){
-			document.location.href  = '/account'
-		}
-		else{
-			alert(result.error)
-		}
-	}
-	
 	async handleSubmit(event){
 		event.preventDefault()
 
@@ -111,15 +94,13 @@ class EditTrade extends Component{
 		}).then((res) => res.json())
 
 		if(result.status === 'ok'){
-			alert('Trade Recorded Successfully')
+			toast.success(`Trade ${name} Edit Success`)
 			this.props.history.push('/journal')
 		}
 		else{
+			toast.error(result.error)
 			if(result.error === 'invalid-signature'){
 				this.props.history.push('/')
-			}
-			else{
-				alert(result.error)
 			}
 		}
 	}
@@ -138,18 +119,16 @@ class EditTrade extends Component{
 				index: index
 			})
 		}).then((res) => res.json())
-		alert(index)
 
 		if(result.status === 'ok'){
-			alert('Trade Deleted Successfully')
+
+			toast.success('Trade Deleted Successfully')
 			this.props.history.push('/journal')
 		}
 		else{
+			toast.error(result.error)
 			if(result.error === 'invalid-signature'){
 				this.props.history.push('/')
-			}
-			else{
-				alert('something is wrong')
 			}
 		}
 	}
@@ -173,7 +152,7 @@ class EditTrade extends Component{
 					</form> 
 					<form onSubmit = {this.handleSubmit}>
 						<div>
-							Name of trade (i.e 250/255 $SPY ):
+							Name of trade <div className = "tooltip"> (?) <span className="tooltiptext"> i.e 250/255 $SPY </span></div>
 							<br></br>
 							<input 
 								type="text" 
@@ -197,7 +176,7 @@ class EditTrade extends Component{
 						</div>
 						<br></br>
 						<div>
-						Type of spread (i.e Credit, Debit, Condor, Butterfly):
+						Type of spread <div className = "tooltip"> (?) <span className="tooltiptext"> i.e Credit, Debit, Condor, Butterfly </span></div>
 						<br></br>
 						<input 
 							type="text" 
@@ -224,7 +203,7 @@ class EditTrade extends Component{
 						</div>
 						<br></br>
 						<div>
-							Equity (if this is a net credit spread, make sure this is negative):
+							Equity Per Spread Or Contract <div className = "tooltip"> (?) <span className="tooltiptext"> if this is a net credit spread, make sure this is negative</span></div>
 							<br></br>
 							<input 
 								type="Number" 
@@ -236,7 +215,7 @@ class EditTrade extends Component{
 						</div>
 						<br></br>
 						<div>
-							Price At Close (Leave empty if trade has not concluded yet):
+							Price At Close Per Spread or Contract <div className = "tooltip"> (?) <span className="tooltiptext"> Leave empty if trade has not concluded yet </span></div>
 							<br></br>
 							<input 
 								type="Number" 
