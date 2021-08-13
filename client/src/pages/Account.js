@@ -19,6 +19,7 @@ class Account extends Component{
 		const y = (new Date()).getFullYear();
 		this.years = Array.from(new Array(20),(val, index) => index + y);
 		
+		this.checkPopulated = this.checkPopulated.bind(this)
 		this.handleChange = this.handleChange.bind(this)
 		this.sendToTrade = this.sendToTrade.bind(this)
 		this.updateCalendar = this.updateCalendar.bind(this)
@@ -147,8 +148,8 @@ class Account extends Component{
 
 	equalDates(tradeObj, date){
 		const [trade_year, trade_month, trade_day] = this.getTradeDate(tradeObj)
-
-		return trade_year === date[0] && trade_month === date[1] && trade_day === date[2]
+		
+		return Number(trade_year) === Number(date[0]) && Number(trade_month) === Number(date[1]) && Number(trade_day) === Number(date[2])
 	}
 
 	checkPopulated(is_populated, date){
@@ -219,16 +220,16 @@ class Account extends Component{
 																<div>
 																{this.equalDates(trade_data[index_four], [year, index_one+1, calendar[index_one][index_two][index_three]]) ? ( 
 																	<div>
-																	{!this.checkPopulated(is_populated, trade_data[index_four].date) ? (
-																			<div>
-																				<h7>View Trades</h7>
-																				<br></br>
-																				<button onClick={this.sendToTrade} value={trade_data[index_four].date}>View</button>
-																			</div>
-																			):(
-																			<div>
-																			</div>
-																	)}
+																		{!this.checkPopulated(is_populated, trade_data[index_four].date) ? (
+																				<div>
+																					<h7>View Trades</h7>
+																					<br></br>
+																					<button onClick={this.sendToTrade} value={trade_data[index_four].date}>View</button>
+																				</div>
+																				):(
+																				<div>
+																				</div>
+																		)}
 																	</div>
 																	) : (
 																	<div>

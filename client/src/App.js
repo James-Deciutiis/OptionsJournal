@@ -25,7 +25,6 @@ class App extends Component{
 				<Route path='/register' component={Register}/>
 				<div>
 					<Navbar/>
-					<Route path='/list' component={List}/>
 					<Route path='/account' component={Account}/>
 					<Route path='/journal' component={Journal}/>
 					<Route path='/record' component={Record}/>

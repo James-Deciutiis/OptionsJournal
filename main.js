@@ -13,7 +13,6 @@ const fetch = require('node-fetch')
 const calendar = require('./config/calendar-config')
 const app = express()
 
-const SECRET = process.env.S3_SECRET
 
 app.set('view engine', 'ejs')
 app.use(express.urlencoded({extended:false}))
