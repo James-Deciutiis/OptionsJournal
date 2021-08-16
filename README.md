@@ -7,6 +7,7 @@ Options Journal is a service where derivatives traders can go to record their tr
 * MongoDB
 * Express JS
 * RESTful APIs
+* Heroku
 * Web tokens
 
 ## How it works
