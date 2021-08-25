@@ -50,7 +50,6 @@ function validateUser(){
 	catch(error){
 		return false
 	}
-	
 }
 ```
 
